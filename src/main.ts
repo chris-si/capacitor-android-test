@@ -147,12 +147,12 @@ async function bootstrap() {
   await testSecureStorage();
 
   // init db
-  try {
-    await initDb();
-  } catch (error) {
-    logger.error("Error during db initialization", error);
-    throw error;
-  }
+  // try {
+  //   await initDb();
+  // } catch (error) {
+  //   logger.error("Error during db initialization", error);
+  //   throw error;
+  // }
 
   // init app
   router.isReady().then(() => {
