@@ -1,13 +1,12 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "io.ionic.starter",
-  appName: "ionic-vite-typeorm-migration",
+  appId: "io.ionic.starter.mobile",
+  appName: "capacitor-android-test",
   webDir: "dist",
-  loggingBehavior: "production",
+  loggingBehavior: "debug",
   server: {
     hostname: "mobile.start.ionic.io",
-    // iosScheme: 'capacitor',
     // androidScheme: 'https',
   },
   android: {

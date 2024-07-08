@@ -29,6 +29,7 @@ import { JeepSqlite } from "jeep-sqlite/dist/components/jeep-sqlite";
 import { DataSource } from "typeorm";
 import { FirstEntity, SecondEntity } from "./db/entities";
 import { AddTables1679564893341 } from "./db/migrations";
+import { SecureStorageService } from "./services/secure-storage.service";
 
 export const isDev = import.meta.env.DEV;
 export const platform = Capacitor.getPlatform();
@@ -61,9 +62,7 @@ if (platform === "web") {
   }
 }
 
-async function bootstrap() {
-  vueApp.use(IonicVue).use(router);
-
+async function initDb() {
   // init db
   let _sqliteConnection: SQLiteConnection = undefined!;
   let _sqliteDataSource: DataSource = undefined!;
@@ -127,6 +126,20 @@ async function bootstrap() {
     }
   } catch (error) {
     console.error("Error during Data Source initialization", error);
+    throw error;
+  }
+}
+
+async function bootstrap() {
+  vueApp.use(IonicVue).use(router);
+
+  const secureStorageService = await SecureStorageService.getInstance();
+
+  // init db
+  try {
+    await initDb();
+  } catch (error) {
+    console.error("Error during db initialization", error);
     throw error;
   }
 
