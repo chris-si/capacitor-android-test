@@ -30,13 +30,15 @@ import { DataSource } from "typeorm";
 import { FirstEntity, SecondEntity } from "./db/entities";
 import { AddTables1679564893341 } from "./db/migrations";
 import { SecureStorageService } from "./services/secure-storage.service";
+import { Logger } from "./utils/logger";
 
 export const isDev = import.meta.env.DEV;
 export const platform = Capacitor.getPlatform();
 export const vueApp = createApp(App);
 
-console.log("Initializing app...");
-console.log("Platform:", platform);
+const logger = new Logger("App-Main");
+logger.log("Initializing app...");
+logger.log("Platform:", platform);
 
 if (platform === "web") {
   const jeepEl = customElements.get("jeep-sqlite");
@@ -49,7 +51,7 @@ if (platform === "web") {
     try {
       await bootstrap();
     } catch (error) {
-      console.error("Error during bootstrapping: ", error);
+      logger.error("Error during bootstrapping: ", error);
       throw new Error(`Error: ${error}`);
     }
   });
@@ -57,7 +59,7 @@ if (platform === "web") {
   try {
     await bootstrap();
   } catch (error) {
-    console.error("Error during bootstrapping: ", error);
+    logger.error("Error during bootstrapping: ", error);
     throw new Error(`Error: ${error}`);
   }
 }
@@ -70,12 +72,12 @@ async function initDb() {
   _sqliteConnection = new SQLiteConnection(CapacitorSQLite);
 
   if (platform === "web") {
-    console.log("Appending jeep-sqlite to body");
+    logger.log("Appending jeep-sqlite to body");
     const jeepSqliteEl = document.createElement("jeep-sqlite");
     document.body.appendChild(jeepSqliteEl);
     await customElements.whenDefined("jeep-sqlite");
     await _sqliteConnection.initWebStore();
-    console.log("Web store initialized");
+    logger.log("Web store initialized");
   }
 
   CapacitorSQLite.checkConnectionsConsistency({
@@ -83,7 +85,7 @@ async function initDb() {
     // dbNames: [this.DATABASE_NAME],
     dbNames: [],
   }).catch((e) => {
-    console.log(e);
+    logger.log(e);
     return {};
   });
 
@@ -111,35 +113,44 @@ async function initDb() {
     const migrationRes = await _sqliteDataSource
       .runMigrations({ transaction: "all" })
       .catch((err) => {
-        console.error("Error running migrations", err);
+        logger.error("Error running migrations", err);
         throw err;
       });
 
     if (migrationRes.length > 0) {
-      console.log(`${migrationRes.length} migrations run successfully`);
+      logger.log(`${migrationRes.length} migrations run successfully`);
     } else {
-      console.log("No migrations were run");
+      logger.log("No migrations were run");
     }
 
     if (platform === "web") {
       await _sqliteConnection.saveToStore("myDb");
     }
   } catch (error) {
-    console.error("Error during Data Source initialization", error);
+    logger.error("Error during Data Source initialization", error);
     throw error;
   }
+}
+
+async function testSecureStorage() {
+  const secureStorageService = await SecureStorageService.getInstance();
+  logger.log("accessing secure storage...");
+  await secureStorageService.someToken.set("someValue");
+  logger.log("Some token was set to 'someValue'");
+  const res = await secureStorageService.someToken.get();
+  logger.log("Some token value:", res);
 }
 
 async function bootstrap() {
   vueApp.use(IonicVue).use(router);
 
-  const secureStorageService = await SecureStorageService.getInstance();
+  await testSecureStorage();
 
   // init db
   try {
     await initDb();
   } catch (error) {
-    console.error("Error during db initialization", error);
+    logger.error("Error during db initialization", error);
     throw error;
   }
 
