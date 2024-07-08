@@ -161,8 +161,7 @@ async function testInternetHttpCall() {
 async function testLocalHttpCall() {
   logger.log("making test local http call...");
   const res2 = await axios
-    // .get("http://192.168.115.38:3100/api/v1/time")
-    .get("http://local.test/api/v1/test")
+    .get("http://10.0.2.2:3100/api/v1/test")
     .catch((e) => {
       const error = e as AxiosError;
       logger.error("Error during local http call", error.code, error.message);
