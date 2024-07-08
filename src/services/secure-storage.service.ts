@@ -16,12 +16,13 @@ export class SecureStorageService {
 
   private readonly KEY_PREFIX = "my-custom-prefix_";
 
-  private constructor() {}
+  private constructor() {
+    this._storage = SecureStorage;
+  }
 
   public static async getInstance(): Promise<SecureStorageService> {
     if (!this._instance) {
       this._instance = new SecureStorageService();
-      this._instance._storage = SecureStorage;
       this._instance.logger.log("new instance created");
       await this._instance.init();
       this._instance.logger.log("initialized");
