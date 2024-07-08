@@ -1,0 +1,7 @@
+{
+  "name": "ionic-vite-typeorm-migration",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
