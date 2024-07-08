@@ -7,7 +7,8 @@ const config: CapacitorConfig = {
   loggingBehavior: "debug",
   server: {
     hostname: "mobile.start.ionic.io",
-    // androidScheme: 'https',
+    androidScheme: "http", // http for local testing only
+    cleartext: true,
   },
   android: {
     appendUserAgent: " x-custom-mua=android",

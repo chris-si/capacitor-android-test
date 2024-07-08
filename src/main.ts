@@ -25,6 +25,7 @@ import "./theme/variables.css";
 
 import { CapacitorSQLite, SQLiteConnection } from "@capacitor-community/sqlite";
 import { Capacitor } from "@capacitor/core";
+import axios, { AxiosError } from "axios";
 import { JeepSqlite } from "jeep-sqlite/dist/components/jeep-sqlite";
 import { DataSource } from "typeorm";
 import { FirstEntity, SecondEntity } from "./db/entities";
@@ -132,6 +133,16 @@ async function initDb() {
   }
 }
 
+async function testDb() {
+  // init db
+  try {
+    await initDb();
+  } catch (error) {
+    logger.error("Error during db initialization", error);
+    throw error;
+  }
+}
+
 async function testSecureStorage() {
   const secureStorageService = await SecureStorageService.getInstance();
   logger.log("accessing secure storage...");
@@ -141,18 +152,37 @@ async function testSecureStorage() {
   logger.log("Some token value:", res);
 }
 
+async function testInternetHttpCall() {
+  logger.log("making test internet http call...");
+  const res = await axios.get("https://jsonplaceholder.typicode.com/todos/1");
+  logger.log("http response:", JSON.stringify(res.data));
+}
+
+async function testLocalHttpCall() {
+  logger.log("making test local http call...");
+  const res2 = await axios
+    // .get("http://192.168.115.38:3100/api/v1/time")
+    .get("http://local.test/api/v1/test")
+    .catch((e) => {
+      const error = e as AxiosError;
+      logger.error("Error during local http call", error.code, error.message);
+      logger.error("Error:", JSON.stringify(error));
+    });
+  if (res2) {
+    logger.log("http response:", JSON.stringify(res2.data));
+  } else {
+    logger.error("Local http call failed");
+  }
+}
+
 async function bootstrap() {
   vueApp.use(IonicVue).use(router);
 
-  await testSecureStorage();
+  // await testSecureStorage();
+  await testDb();
 
-  // init db
-  try {
-    await initDb();
-  } catch (error) {
-    logger.error("Error during db initialization", error);
-    throw error;
-  }
+  await testInternetHttpCall();
+  await testLocalHttpCall();
 
   // init app
   router.isReady().then(() => {
