@@ -15,13 +15,6 @@ buildscript {
     }
 }
 
-//packaging {
-//    resources {
-//        exclude 'build-data.properties'
-//    }
-//}
-
-
 apply from: "variables.gradle"
 
 allprojects {
