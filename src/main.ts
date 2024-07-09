@@ -30,8 +30,12 @@ import { JeepSqlite } from "jeep-sqlite/dist/components/jeep-sqlite";
 import { DataSource } from "typeorm";
 import { FirstEntity, SecondEntity } from "./db/entities";
 import { AddTables1679564893341 } from "./db/migrations";
+import { FileWriterService } from "./services/file-writer.service";
 import { SecureStorageService } from "./services/secure-storage.service";
 import { Logger } from "./utils/logger";
+
+import { createPinia } from "pinia";
+import { useDefaultStore } from "./stores/default";
 
 export const isDev = import.meta.env.DEV;
 export const platform = Capacitor.getPlatform();
@@ -174,14 +178,29 @@ async function testLocalHttpCall() {
   }
 }
 
+async function testBlobWriter() {
+  logger.log("testing blob writer...");
+  const fileWriterService = await FileWriterService.getInstance();
+  const testImage = await fileWriterService.test();
+  return testImage;
+}
+
 async function bootstrap() {
   vueApp.use(IonicVue).use(router);
+
+  const pinia = createPinia();
+  vueApp.use(pinia);
+
+  const defaultStore = useDefaultStore();
 
   // await testSecureStorage();
   await testDb();
 
   await testInternetHttpCall();
-  await testLocalHttpCall();
+  // await testLocalHttpCall();
+
+  const testImage = await testBlobWriter();
+  defaultStore.setTestImage(testImage);
 
   // init app
   router.isReady().then(() => {

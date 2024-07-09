@@ -6,17 +6,25 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (6.0.0):
     - Capacitor
+  - CapacitorBlobWriter (0.0.1):
+    - Capacitor
+    - GCDWebServer (~> 3.0)
   - CapacitorCommunitySqlite (6.0.1):
     - Capacitor
     - SQLCipher
     - ZIPFoundation
   - CapacitorCordova (6.1.0)
+  - CapacitorFilesystem (6.0.0):
+    - Capacitor
   - CapacitorHaptics (6.0.0):
     - Capacitor
   - CapacitorKeyboard (6.0.1):
     - Capacitor
   - CapacitorStatusBar (6.0.0):
     - Capacitor
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
   - KeychainSwift (21.0.0)
   - SQLCipher (4.5.3):
     - SQLCipher/standard (= 4.5.3)
@@ -29,14 +37,17 @@ DEPENDENCIES:
   - "AparajitaCapacitorSecureStorage (from `../../node_modules/@aparajita/capacitor-secure-storage`)"
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - CapacitorBlobWriter (from `../../node_modules/capacitor-blob-writer`)
   - "CapacitorCommunitySqlite (from `../../node_modules/@capacitor-community/sqlite`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
 
 SPEC REPOS:
   trunk:
+    - GCDWebServer
     - KeychainSwift
     - SQLCipher
     - ZIPFoundation
@@ -48,10 +59,14 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
+  CapacitorBlobWriter:
+    :path: "../../node_modules/capacitor-blob-writer"
   CapacitorCommunitySqlite:
     :path: "../../node_modules/@capacitor-community/sqlite"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
   CapacitorHaptics:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
@@ -63,15 +78,18 @@ SPEC CHECKSUMS:
   AparajitaCapacitorSecureStorage: b3e4c419898d0e6c0dc71de94cb8340b5d13f5f0
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorBlobWriter: 110eeaf80611f19bf01a8a05ff3672149ed0baad
   CapacitorCommunitySqlite: d0b543e12a06ee6fd0dc287c389e6b435ec4acdf
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
+  CapacitorFilesystem: 60e59ba274c234a979e7a3be2552feaadcee4263
   CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
   CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
   CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   KeychainSwift: 4a71a45c802fd9e73906457c2dcbdbdc06c9419d
   SQLCipher: 57fa9f863fa4a3ed9dd3c90ace52315db8c0fdca
   ZIPFoundation: d170fa8e270b2a32bef9dcdcabff5b8f1a5deced
 
-PODFILE CHECKSUM: 09a5c550fba82c8b342aaa4ab37e8d71e6a02cf6
+PODFILE CHECKSUM: 1e06d05d360af05191f78fff5c6c8056407ab3a9
 
 COCOAPODS: 1.15.2
