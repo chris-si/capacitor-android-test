@@ -193,11 +193,11 @@ async function bootstrap() {
 
   const defaultStore = useDefaultStore();
 
-  // await testSecureStorage();
   await testDb();
-
   await testInternetHttpCall();
   // await testLocalHttpCall();
+
+  await testSecureStorage();
 
   const testImage = await testBlobWriter();
   defaultStore.setTestImage(testImage);
