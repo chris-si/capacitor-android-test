@@ -27,6 +27,7 @@
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
     "capacitor-blob-writer": "^1.1.17",
+    "capacitor-secure-storage-plugin": "^0.10.0",
     "ionicons": "^7.4.0",
     "pinia": "^2.1.7",
     "typeorm": "^0.3.20",
