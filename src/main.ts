@@ -197,10 +197,11 @@ async function bootstrap() {
   await testInternetHttpCall();
   // await testLocalHttpCall();
 
-  await testSecureStorage();
-
   const testImage = await testBlobWriter();
   defaultStore.setTestImage(testImage);
+
+  logger.log("testing secure storage access");
+  await testSecureStorage();
 
   // init app
   router.isReady().then(() => {
